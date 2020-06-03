@@ -5,12 +5,27 @@
  */
 package compi1vacasjunio2020.practica1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author alexa
  */
 public class Inicio extends javax.swing.JFrame {
-
+LinkedList <Token> TablaSimbolos1=new LinkedList<>();
+LinkedList <Token> Errores1=new LinkedList<>();
+LinkedList <Token> TablaSimbolos2=new LinkedList<>();
+LinkedList <Token> Errores2=new LinkedList<>();
+String archivo1,archivo2;
     /**
      * Creates new form Inicio
      */
@@ -27,22 +42,425 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jPanel1 = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+
+        jMenuItem5.setText("jMenuItem5");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 719, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 460, Short.MAX_VALUE)
+        );
+
+        jMenu1.setText("Abrir Archivos");
+
+        jMenuItem1.setText("Archivo 1");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Archivo 2");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Analizar");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem3.setText("Archivo 1");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Archivo 2");
+        jMenu2.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Instrucciones");
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Reportes");
+
+        jMenuItem6.setText("Reporte de Tokens");
+        jMenu4.add(jMenuItem6);
+
+        jMenuItem7.setText("Reporte de Errores");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Salir");
+        jMenuBar1.add(jMenu5);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // Abrir Archivo 2
+        JFileChooser fileChooser = new JFileChooser();
+         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de texto *.pzs", "pzs"));
+        int seleccion = fileChooser.showOpenDialog(this);
+//        fileChooser.setDialogTitle("El exito es de quien persevera");
+        if (seleccion == JFileChooser.APPROVE_OPTION){
+            try{
+                String aux="";
+                String texto = "";
+                File fichero = fileChooser.getSelectedFile(); 
+//                archivos.add(fichero);
+//                Archivo=fichero;
+                String ruta=fileChooser.getSelectedFile().getAbsolutePath();
+                if(ruta.endsWith(".NM"))
+                {     
+                   FileReader archivos1=new FileReader(fichero);
+                   BufferedReader lee=new BufferedReader(archivos1);
+                   while((aux=lee.readLine())!=null)
+                   {
+                      texto+= aux+ "\n";
+                   }
+                    lee.close();
+                        archivo2=texto;            
+//                    pestañas.addTab(fichero.getName(), er);
+                    
+//                    comando1.setPreferredSize(new Dimension(630, 250));
+//                    ObtenerCursor(comando1);
+//                   AutoCompletar(comando1);
+                
+                }    
+
+            }
+            catch(IOException ex)
+            {
+              JOptionPane.showMessageDialog(null,ex+"" +
+                    "\nNo se ha encontrado el archivo",
+                          "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // Abrir Archivo 1
+         JFileChooser fileChooser = new JFileChooser();
+         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de texto *.trs", "trs"));
+        int seleccion = fileChooser.showOpenDialog(this);
+//        fileChooser.setDialogTitle("El exito es de quien persevera");
+        if (seleccion == JFileChooser.APPROVE_OPTION){
+            try{
+                String aux="";
+                String texto = "";
+                File fichero = fileChooser.getSelectedFile(); 
+//                archivos.add(fichero);
+//                Archivo=fichero;
+                String ruta=fileChooser.getSelectedFile().getAbsolutePath();
+                if(ruta.endsWith(".NM"))
+                {     
+                   FileReader archivos1=new FileReader(fichero);
+                   BufferedReader lee=new BufferedReader(archivos1);
+                   while((aux=lee.readLine())!=null)
+                   {
+                      texto+= aux+ "\n";
+                   }
+                    lee.close();
+                     archivo1=texto;               
+//                    pestañas.addTab(fichero.getName(), er);
+                    
+//                    comando1.setPreferredSize(new Dimension(630, 250));
+//                    ObtenerCursor(comando1);
+//                   AutoCompletar(comando1);
+                
+                }    
+
+            }
+            catch(IOException ex)
+            {
+              JOptionPane.showMessageDialog(null,ex+"" +
+                    "\nNo se ha encontrado el archivo",
+                          "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        // analizador lexico del archivo 1
+         if(archivo1!=null){
+             AnalizarArchivo1(archivo1);
+         }
+    }//GEN-LAST:event_jMenu2ActionPerformed
+private void AnalizarArchivo1(String texto){
+    String lexema="";
+    int estado=0;
+    int fila=1,columna=1;
+    char c;
+    for (int i = 0; i < texto.length(); i++) {
+        c=texto.charAt(i);
+        switch(estado){
+            case 0:
+                if(Character.isLetter(c)){
+                    lexema+=c;
+                    estado=1;
+                }else if(Character.isDigit(c)){
+                    lexema+=c;
+                    estado=2;
+                }else if(c=='#'){
+                    Token tk=new Token(String.valueOf(c),fila,columna, Token.Tipo.numeral);  
+                    TablaSimbolos1.add(tk);
+                    estado=0;
+                }else if(c=='*'){
+                    Token tk=new Token(String.valueOf(c),fila,columna, Token.Tipo.asterisco);
+                    TablaSimbolos1.add(tk);
+                }else if(c=='/'){
+                    lexema+=c;
+                    estado=3;
+                }else if(c=='<'){
+                    lexema+=c;
+                    estado=4;
+                }
+                else if(c=='\n'){
+                    columna=1;
+                    fila++;
+                }else if(c=='\b'|| c=='\t' || c=='\r'   || c==' '){
+                    
+                }else{
+                    lexema+=c;
+                    Token error=new Token(lexema,fila,columna,Token.Tipo.error);
+                    Errores1.add(error);
+                    lexema="";
+                    estado=0;
+                }
+                break;
+            case 1:
+                if(!Character.isLetterOrDigit(c) || c!='_'){
+                    Token tk=new Token(lexema,fila,columna,Token.Tipo.id);
+                    TablaSimbolos1.add(tk);
+                    lexema="";
+                    estado=0;
+                    i--;
+                    continue;
+                }
+                lexema+=c;
+                estado=1;
+                break;
+            case 2:
+                if(!Character.isDigit(c)){
+                    Token tk=new Token(lexema,fila,columna,Token.Tipo.numero);
+                    TablaSimbolos1.add(tk);
+                    lexema="";
+                    estado=0;
+                    i--;
+                    continue;
+                }
+                lexema+=c;
+                estado=2;
+                break;
+            case 3:
+                if(c=='/'){
+                 lexema+=c;
+                 estado=6;
+            }
+                break;
+            case 4:
+                if(c=='!'){
+                    lexema+=c;
+                    estado=7;
+                }
+                break;
+            case 6:
+                if(c=='\n'){
+                    Token tk=new Token(lexema,fila,columna,Token.Tipo.ComentarioSimple);
+                    TablaSimbolos1.add(tk);
+                    lexema="";
+                    estado=0;
+                  
+                    continue;
+                }
+                lexema+=c;
+                estado=6;
+                break;
+            case 7:
+                if(c=='!'){
+                    lexema+=c;
+                    estado=8;
+                    continue;
+                }
+                lexema+=c;
+                estado=7;
+                break;
+            case 8:
+                if(c=='>'){
+                    lexema+=c;
+                     Token tk=new Token(lexema,fila,columna,Token.Tipo.ComentarioMult);
+                    TablaSimbolos1.add(tk);
+                    lexema="";
+                    estado=0;
+                }
+                    
+                    
+                break;
+        }
+        columna++;
+    }
+}
+private void AnalizarArchivo2(String texto){
+        String lexema = "";
+        int estado = 0;
+        int fila = 1, columna = 1;
+        char c;
+        for (int i = 0; i < texto.length(); i++) {
+            c = texto.charAt(i);
+            switch (estado) {
+                case 0:
+                    if (Character.isLetter(c)) {
+                        if (c == 'v') {
+                            Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.abajo);
+                            TablaSimbolos2.add(tk);
+                            estado = 0;
+                            continue;
+                        }
+                        Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.id);
+                        TablaSimbolos2.add(tk);
+                        estado = 0;
+                    } else if (c == ',') {
+                        Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.coma);
+                        TablaSimbolos2.add(tk);
+                        estado = 0;
+                    } else if (c == '/') {
+                        lexema += c;
+                        estado = 3;
+                    } else if (c == '<') {
+                        lexema += c;
+                        estado = 4;
+                    } else if (c == '>') {
+                        Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.mayor);
+                        TablaSimbolos2.add(tk);
+                        estado = 0;
+                    } else if (c == '^') {
+                        Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.arriba);
+                        TablaSimbolos2.add(tk);
+                        estado = 0;
+                    } else if (c == '\n') {
+                        columna = 1;
+                        fila++;
+                    } else if (c == '\b' || c == '\t' || c == '\r' || c == ' ') {
+
+                    } else {
+                        lexema += c;
+                        Token error = new Token(lexema, fila, columna, Token.Tipo.error);
+                        Errores2.add(error);
+                        lexema = "";
+                        estado = 0;
+                    }
+                    break;
+
+                case 3:
+                    if (c == '/') {
+                        lexema += c;
+                        estado = 6;
+                    }
+                    break;
+                case 4:
+                    if (c != '!') {
+                        Token tk = new Token(lexema, fila, columna, Token.Tipo.menor);
+                        TablaSimbolos2.add(tk);
+                        lexema = "";
+                        estado = 0;
+                        i--;
+                        continue;
+                    }
+                    lexema += c;
+                    estado = 7;
+                    break;
+                case 6:
+                    if (c == '\n') {
+                        Token tk = new Token(lexema, fila, columna, Token.Tipo.ComentarioSimple);
+                        TablaSimbolos2.add(tk);
+                        lexema = "";
+                        estado = 0;
+
+                        continue;
+                    }
+                    lexema += c;
+                    estado = 6;
+                    break;
+                case 7:
+                    if (c == '!') {
+                        lexema += c;
+                        estado = 8;
+                        continue;
+                    }
+                    lexema += c;
+                    estado = 7;
+                    break;
+
+                case 8:
+                    if (c == '>') {
+                        lexema += c;
+                        Token tk = new Token(lexema, fila, columna, Token.Tipo.ComentarioMult);
+                        TablaSimbolos2.add(tk);
+                        lexema = "";
+                        estado = 0;
+                    }
+
+                    break;
+            }
+        }
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -79,5 +497,19 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
