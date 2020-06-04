@@ -5,6 +5,8 @@
  */
 package compi1vacasjunio2020.practica1;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author alexa
@@ -12,7 +14,7 @@ package compi1vacasjunio2020.practica1;
 public class Matriz {
     int x, y;
     String id;
-    String[][] matriz;
+    JLabel[][] matriz;
     
     
 
@@ -25,12 +27,20 @@ public class Matriz {
         return id;
     }
 
-    public String[][] getMatriz() {
+    public JLabel[][] getMatriz() {
         return matriz;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
     
     public Matriz(int x, int y, String id) {
-        this.matriz=new String[y][x];
+        this.matriz=new JLabel[y][x];
         
         this.id = id;
     }

@@ -5,10 +5,27 @@
  */
 package compi1vacasjunio2020.practica1;
 
+import compi1vacasjunio2020.practica1.Token.Tipo;
+
 /**
  *
  * @author alexa
  */
 public class Pieza {
+   private String pieza;
+   private Tipo Orientacion;
+
+    public Pieza(String pieza, Tipo Orientacion) {
+        this.pieza = pieza;
+        this.Orientacion = Orientacion;
+    }
+
+    public String getPieza() {
+        return pieza;
+    }
+
+    public Tipo getOrientacion() {
+        return Orientacion;
+    }
     
 }
