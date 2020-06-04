@@ -23,6 +23,6 @@ public class Token {
     
     
     public enum  Tipo{
-     error,id,numero,asterisco,numeral,coma, mayor,menor,abajo,arriba,ComentarioSimple,ComentarioMult
+     error,id,numero,asterisco,numeral,coma, mayor,menor,abajo,arriba,ComentarioSimple,ComentarioMult,guion
     }        
 }

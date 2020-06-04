@@ -5,15 +5,20 @@
  */
 package compi1vacasjunio2020.practica1;
 
+import compi1vacasjunio2020.practica1.Token.Tipo;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -25,14 +30,33 @@ LinkedList <Token> TablaSimbolos1=new LinkedList<>();
 LinkedList <Token> Errores1=new LinkedList<>();
 LinkedList <Token> TablaSimbolos2=new LinkedList<>();
 LinkedList <Token> Errores2=new LinkedList<>();
+LinkedList <Matriz> niveles=new LinkedList<>();
+LinkedList <Pieza> Piezas=new LinkedList<>();
+Item [][] CatalogoPiezas=new Item[7][4];
+
 String archivo1,archivo2;
+int nivel=0;
     /**
      * Creates new form Inicio
      */
     public Inicio() {
         initComponents();
+        CrearCatalogo();
     }
-
+    private void CrearCatalogo(){
+        String letras[]={"i","j","l","o","s","z","t"};
+        Tipo tipos[]={Tipo.arriba,Tipo.mayor,Tipo.abajo,Tipo.menor};
+        for (int i = 0; i <7; i++) {
+            for (int j = 0; j < 4; j++) {
+                
+                CatalogoPiezas[i][j]=new Item(new Pieza(letras[i],tipos[j]));
+                CatalogoPiezas[i][j].CrearPieza();
+            }
+        }
+    }
+    private void RotarPieza(){
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +67,8 @@ String archivo1,archivo2;
     private void initComponents() {
 
         jMenuItem5 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        panel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -55,20 +80,23 @@ String archivo1,archivo2;
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
         jMenuItem5.setText("jMenuItem5");
 
+        jMenuItem8.setText("jMenuItem8");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 719, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 460, Short.MAX_VALUE)
         );
 
@@ -103,6 +131,11 @@ String archivo1,archivo2;
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Archivo 2");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -125,6 +158,14 @@ String archivo1,archivo2;
 
         jMenuBar1.add(jMenu4);
 
+        jMenu6.setText("Jugar");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu6);
+
         jMenu5.setText("Salir");
         jMenuBar1.add(jMenu5);
 
@@ -135,15 +176,17 @@ String archivo1,archivo2;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        panel.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,10 +281,49 @@ String archivo1,archivo2;
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // analizador lexico del archivo 1
+        TablaSimbolos1.clear();
+        Errores1.clear();
+        niveles.clear();
          if(archivo1!=null){
              AnalizarArchivo1(archivo1);
+             if(!Errores1.isEmpty()){
+                 JOptionPane.showMessageDialog(null, "Existen errores Léxicos en el Archivo 1");
+                 return;
+             }
+             GeneracionMatrices();
+             
          }
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // Análisis léxico Archivo 2
+        TablaSimbolos2.clear();
+        Errores2.clear();
+        Piezas.clear();
+        if(archivo2!=null){            
+            AnalizarArchivo2(archivo2);
+            if(!Errores2.isEmpty()){
+                 JOptionPane.showMessageDialog(null, "Existen errores Léxicos en el Archivo 2");
+                 return;
+            }
+            GeneracionPiezas();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        // Se prepara todo para jugar, se coloca el tablero y las piezas
+        if(niveles.isEmpty()  || Piezas.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Los niveles o las piezas no han sido cargados");
+            return;
+        }
+        Matriz tablero=niveles.get(nivel);
+        for (int i = 0; i <tablero.getX(); i++) {
+            for (int j = 0; j < tablero.getY(); j++) {
+                
+            }
+        }
+        
+    }//GEN-LAST:event_jMenu6ActionPerformed
 private void AnalizarArchivo1(String texto){
     String lexema="";
     int estado=0;
@@ -261,7 +343,12 @@ private void AnalizarArchivo1(String texto){
                     Token tk=new Token(String.valueOf(c),fila,columna, Token.Tipo.numeral);  
                     TablaSimbolos1.add(tk);
                     estado=0;
-                }else if(c=='*'){
+                }else if(c=='-'){
+                    Token tk=new Token(String.valueOf(c),fila,columna, Token.Tipo.guion);  
+                    TablaSimbolos1.add(tk);
+                    estado=0;
+                }
+                else if(c=='*'){
                     Token tk=new Token(String.valueOf(c),fila,columna, Token.Tipo.asterisco);
                     TablaSimbolos1.add(tk);
                 }else if(c=='/'){
@@ -461,6 +548,64 @@ private void AnalizarArchivo2(String texto){
         }
 
     }
+private void GeneracionMatrices(){
+    if(!TablaSimbolos1.isEmpty()){
+        for (int i=0;i<TablaSimbolos1.size();i++) {
+            Token tk=TablaSimbolos1.get(i);
+            Token tk1=TablaSimbolos1.get(i+1);
+            Token tk2=TablaSimbolos1.get(i+2);
+            if(!tk.tipo.equals(Tipo.numero) && !tk1.tipo.equals(Tipo.guion)){
+                continue;
+            }
+            int x=Integer.parseInt(tk.lexema);
+            int y=Integer.parseInt(tk2.lexema);
+            int cont=i+3;
+            Token idmatriz=TablaSimbolos1.get(cont);
+            //se busca el id de la matriz de juego
+            while(!idmatriz.tipo.equals(Tipo.id)){
+                cont++;
+                idmatriz=TablaSimbolos1.get(cont);
+            }
+            Matriz matriz=new Matriz(x, y, idmatriz.lexema);
+            cont++;
+            //se encuentra el inicio de la matriz
+            Token start=TablaSimbolos1.get(cont);
+            while(!start.tipo.equals(Tipo.numeral) || !start.tipo.equals(Tipo.asterisco)){
+                cont++;
+                start=TablaSimbolos1.get(cont);
+            }
+            //se empieza a llenar la matriz con los datos
+            for (int j = 0; j <x; j++) {
+                for (int k = 0; k < y; k++) {
+                    Token sim=TablaSimbolos1.get(cont);                    
+                    matriz.matriz[j][k]=new JLabel();
+                    matriz.matriz[j][k].setSize(5,5);
+                    if(sim.tipo.equals(Tipo.asterisco)){                        
+                        matriz.matriz[j][k].setBackground(Color.orange);                        
+                    }else if(sim.tipo.equals(Tipo.numeral)){
+                         matriz.matriz[j][k].setBackground(Color.white);    
+                    }
+                    cont++;
+                }
+            }
+            niveles.add(matriz);
+            i=cont;
+        }
+    }
+}
+private void GeneracionPiezas(){
+    if(!TablaSimbolos2.isEmpty()){
+        for (int i = 0; i <TablaSimbolos2.size(); i++) {
+            Token pieza=TablaSimbolos2.get(i);
+            if(!pieza.tipo.equals(Tipo.id)){
+                continue;
+            }
+            Token orientacion=TablaSimbolos2.get(i+2);
+            String pz=pieza.lexema.toLowerCase();
+            Piezas.add(new Pieza(pz,orientacion.tipo));
+        }
+    }
+}
     /**
      * @param args the command line arguments
      */
@@ -502,6 +647,7 @@ private void AnalizarArchivo2(String texto){
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -510,6 +656,7 @@ private void AnalizarArchivo2(String texto){
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }
