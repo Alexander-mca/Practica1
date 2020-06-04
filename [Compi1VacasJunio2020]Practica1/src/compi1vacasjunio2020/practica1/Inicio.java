@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -33,6 +34,7 @@ LinkedList <Token> Errores2=new LinkedList<>();
 LinkedList <Matriz> niveles=new LinkedList<>();
 LinkedList <Pieza> Piezas=new LinkedList<>();
 Item [][] CatalogoPiezas=new Item[7][4];
+JPanel paneljuego=new JPanel();
 
 String archivo1,archivo2;
 int nivel=0;
@@ -43,6 +45,7 @@ int nivel=0;
         initComponents();
         CrearCatalogo();
     }
+    
     private void CrearCatalogo(){
         String letras[]={"i","j","l","o","s","z","t"};
         Tipo tipos[]={Tipo.arriba,Tipo.mayor,Tipo.abajo,Tipo.menor};
@@ -316,12 +319,7 @@ int nivel=0;
             JOptionPane.showMessageDialog(null, "Los niveles o las piezas no han sido cargados");
             return;
         }
-        Matriz tablero=niveles.get(nivel);
-        for (int i = 0; i <tablero.getX(); i++) {
-            for (int j = 0; j < tablero.getY(); j++) {
-                
-            }
-        }
+        Niveles();
         
     }//GEN-LAST:event_jMenu6ActionPerformed
 private void AnalizarArchivo1(String texto){
@@ -605,6 +603,23 @@ private void GeneracionPiezas(){
             Piezas.add(new Pieza(pz,orientacion.tipo));
         }
     }
+}
+private void Niveles(){
+//     paneljuego.repaint();
+     paneljuego.removeAll();
+     Matriz tablero=niveles.get(nivel);
+        int x=20,y=50;
+        paneljuego.setBounds(15, 40, tablero.getX()*6, tablero.getY()*6);
+        for (int i = 0; i <tablero.getX(); i++) {
+            for (int j = 0; j < tablero.getY(); j++) {
+               tablero.matriz[i][j].setBounds(x, y, 5, 5);
+               paneljuego.add(tablero.matriz[i][j]);
+               x=x+5;
+            }
+            y=y+5;
+        }
+        panel.add(paneljuego);
+        
 }
     /**
      * @param args the command line arguments
