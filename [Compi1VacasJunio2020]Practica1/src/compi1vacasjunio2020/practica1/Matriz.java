@@ -12,9 +12,9 @@ import javax.swing.JLabel;
  * @author alexa
  */
 public class Matriz {
-    int x, y;
-    String id;
-    JLabel[][] matriz;
+   private int x, y;
+   private String id;
+   private JLabel[][] matriz;
     
     
 
@@ -40,8 +40,7 @@ public class Matriz {
     }
     
     public Matriz(int x, int y, String id) {
-        this.matriz=new JLabel[y][x];
-        
+        this.matriz=new JLabel[x][y];
         this.id = id;
     }
     

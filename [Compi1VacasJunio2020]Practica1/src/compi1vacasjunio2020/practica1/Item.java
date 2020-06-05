@@ -14,8 +14,16 @@ import javax.swing.JLabel;
  * @author alexa
  */
 public class Item {
-    Pieza datos;
-    JLabel[][] pieza;
+   private Pieza datos;
+    private JLabel[][] pieza;
+
+    public Pieza getDatos() {
+        return datos;
+    }
+
+    public JLabel[][] getPieza() {
+        return pieza;
+    }
 
     public Item(Pieza datos) {
         this.datos = datos;
@@ -31,6 +39,7 @@ public class Item {
                             pieza[i][0]=new JLabel();
                             pieza[i][0].setSize(5,5);
                             pieza[i][0].setBackground(Color.cyan);
+                           
                         }
                     }
                     if(tipo.equals(Tipo.menor)   || tipo.equals(Tipo.mayor)){
@@ -42,6 +51,7 @@ public class Item {
                     }
                     break;
                 case "j":
+                    
                     break;
                 case "l":
                     break;
