@@ -5,6 +5,7 @@
  */
 package compi1vacasjunio2020.practica1;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -14,7 +15,7 @@ import javax.swing.JLabel;
 public class Matriz {
    private int x, y;
    private String id;
-   private JLabel[][] matriz;
+   private JButton[][] matriz;
     
     
 
@@ -27,7 +28,7 @@ public class Matriz {
         return id;
     }
 
-    public JLabel[][] getMatriz() {
+    public JButton[][] getMatriz() {
         return matriz;
     }
 
@@ -40,7 +41,9 @@ public class Matriz {
     }
     
     public Matriz(int x, int y, String id) {
-        this.matriz=new JLabel[x][y];
+        this.matriz=new JButton[x][y];
+        this.x=x;
+        this.y=y;
         this.id = id;
     }
     

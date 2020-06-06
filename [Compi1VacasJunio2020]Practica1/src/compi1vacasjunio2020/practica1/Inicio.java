@@ -19,8 +19,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import sun.swing.plaf.windows.ClassicSortArrowIcon;
 
 /**
  *
@@ -34,7 +37,7 @@ LinkedList <Token> Errores2=new LinkedList<>();
 LinkedList <Matriz> niveles=new LinkedList<>();
 LinkedList <Pieza> Piezas=new LinkedList<>();
 Item [][] CatalogoPiezas=new Item[7][4];
-JPanel paneljuego=new JPanel();
+
 
 String archivo1,archivo2;
 int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
@@ -44,6 +47,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
     public Inicio() {
         initComponents();
         CrearCatalogo();
+        color.setBackground(Color.red);
+        
     }
     
     private void CrearCatalogo(){
@@ -96,6 +101,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         jLabel4 = new javax.swing.JLabel();
         meta = new javax.swing.JLabel();
         level = new javax.swing.JLabel();
+        color = new javax.swing.JLabel();
+        paneljuego = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -106,9 +113,13 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         jMenu3 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu11 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
@@ -117,6 +128,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         jMenuItem8.setText("jMenuItem8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("Izquierda");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -154,19 +166,33 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
 
         jLabel4.setText("Meta:");
 
+        paneljuego.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout paneljuegoLayout = new javax.swing.GroupLayout(paneljuego);
+        paneljuego.setLayout(paneljuegoLayout);
+        paneljuegoLayout.setHorizontalGroup(
+            paneljuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 473, Short.MAX_VALUE)
+        );
+        paneljuegoLayout.setVerticalGroup(
+            paneljuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap(499, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76))
+            .addGroup(panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(paneljuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                             .addComponent(jButton3)
                             .addGap(106, 106, 106))
@@ -183,7 +209,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                                     .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                                             .addComponent(level, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(69, 69, 69)
                                             .addComponent(labelnivel)
                                             .addGap(64, 64, 64))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
@@ -197,38 +223,51 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                                             .addComponent(meta, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(32, 32, 32)))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addGap(55, 55, 55))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addGap(97, 97, 97))))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(meta))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(punteo)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelnivel)
-                    .addComponent(jLabel3)
-                    .addComponent(level))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(idnivel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
-                .addGap(39, 39, 39))
+                .addContainerGap()
+                .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(meta))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(punteo)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelnivel)
+                            .addComponent(jLabel3)
+                            .addComponent(level))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(idnivel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addGap(39, 39, 39))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(paneljuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         jMenu1.setText("Abrir Archivos");
@@ -291,22 +330,56 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Reportes");
+        jMenu9.setText("Reportes");
 
-        jMenuItem6.setText("Reporte de Tokens");
-        jMenu4.add(jMenuItem6);
+        jMenu10.setText("Archivo 1");
 
-        jMenuItem7.setText("Reporte de Errores");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem9.setText("Reporte Tokens");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                jMenuItem9ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem7);
+        jMenu10.add(jMenuItem9);
 
-        jMenuBar1.add(jMenu4);
+        jMenuItem10.setText("Reporte Errores");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem10);
 
-        jMenu6.setText("Jugar");
+        jMenu9.add(jMenu10);
+
+        jMenu11.setText("Archivo 2");
+
+        jMenuItem11.setText("Reporte Tokens");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem11);
+
+        jMenuItem12.setText("Reporte Errores");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem12);
+
+        jMenu9.add(jMenu11);
+
+        jMenuBar1.add(jMenu9);
+
+        jMenu6.setText("Iniciar Juego");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu6MouseClicked(evt);
+            }
+        });
         jMenu6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu6ActionPerformed(evt);
@@ -334,9 +407,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         panel.getAccessibleContext().setAccessibleName("");
@@ -358,7 +429,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
 //                archivos.add(fichero);
 //                Archivo=fichero;
                 String ruta=fileChooser.getSelectedFile().getAbsolutePath();
-                if(ruta.endsWith(".NM"))
+                if(ruta.endsWith(".pzs"))
                 {     
                    FileReader archivos1=new FileReader(fichero);
                    BufferedReader lee=new BufferedReader(archivos1);
@@ -367,7 +438,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                       texto+= aux+ "\n";
                    }
                     lee.close();
-                        archivo2=texto;            
+                        archivo2=texto;    
+                         JOptionPane.showMessageDialog(null, "Archivo 2 cargado con exito.");
 //                    pestañas.addTab(fichero.getName(), er);
                     
 //                    comando1.setPreferredSize(new Dimension(630, 250));
@@ -386,10 +458,6 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // Abrir Archivo 1
          JFileChooser fileChooser = new JFileChooser();
@@ -404,7 +472,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
 //                archivos.add(fichero);
 //                Archivo=fichero;
                 String ruta=fileChooser.getSelectedFile().getAbsolutePath();
-                if(ruta.endsWith(".NM"))
+                if(ruta.endsWith(".trs"))
                 {     
                    FileReader archivos1=new FileReader(fichero);
                    BufferedReader lee=new BufferedReader(archivos1);
@@ -413,7 +481,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                       texto+= aux+ "\n";
                    }
                     lee.close();
-                     archivo1=texto;               
+                     archivo1=texto;
+                     JOptionPane.showMessageDialog(null, "Archivo 1 cargado con exito.");
 //                    pestañas.addTab(fichero.getName(), er);
                     
 //                    comando1.setPreferredSize(new Dimension(630, 250));
@@ -460,21 +529,22 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                  return;
             }
             GeneracionPiezas();
+            JOptionPane.showMessageDialog(null, "El Archivo 2 ha sido analizado.");
             
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
-        // Se prepara todo para jugar, se coloca el tablero y las piezas
-        if(niveles.isEmpty()  || Piezas.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Los niveles o las piezas no han sido cargados");
-            return;
-        }
-        meta.setText("100");
-        Item pieza=EscogerPieza(piezajuego);
-        CargarPieza(pieza);
-         Niveles(0);
-         level.setText("0");
+//        // Se prepara todo para jugar, se coloca el tablero y las piezas
+//        if(niveles.isEmpty()  || Piezas.isEmpty()){
+//            JOptionPane.showMessageDialog(null, "Los niveles o las piezas no han sido cargados");
+//            return;
+//        }
+//        meta.setText("100");
+//        Item pieza=EscogerPieza(piezajuego);
+//        CargarPieza(pieza);
+//         Niveles(0);
+//         level.setText("0");
         
     }//GEN-LAST:event_jMenu6ActionPerformed
 
@@ -483,7 +553,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         for (int i = 0; i < 4; i++) {
             MoverDerecha();
         }
-        Niveles(nivel);
+        Niveles();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -531,7 +601,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             piezajuego=0;
             Item pieza=EscogerPieza(piezajuego);
             CargarPieza(pieza);            
-            Niveles(nivel);
+            Niveles();
             punteo.setText("0");
             return;
             
@@ -545,15 +615,14 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             piezajuego=0;
             Item pieza1=EscogerPieza(piezajuego);
             CargarPieza(pieza1);
-            Niveles(nivel);
+            Niveles();
             puntuacion += punt;
             String nombre=niveles.get(nivel).getId();
             //se calcula la meta para el siguiente nivel
             mt = 2 * punt + 100;
             meta.setText(String.valueOf(mt));
-            level.setText(String.valueOf(nivel));
-            idnivel.setText(nombre);
-            
+            labelnivel.setText(String.valueOf(nivel+1));
+            idnivel.setText(nombre);         
             
             punteo.setText("0");
         }
@@ -563,7 +632,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             if (resp == 1) {
                 nivel = 0;
                 punteo.setText("0");
-                Niveles(nivel);
+                Niveles();
                 meta.setText("100");
             }
             return;
@@ -575,14 +644,15 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         }
         Item pieza = EscogerPieza(piezajuego);
         CargarPieza(pieza);
-        Niveles(nivel);
+        Niveles();
+        
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // se rota la pieza
         RotarPieza();
-        Niveles(nivel);
+        Niveles();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -590,7 +660,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         for (int i = 0; i <4; i++) {
             MoverIzquierda();
         }
-        Niveles(nivel);
+        Niveles();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
@@ -613,6 +683,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                  return;
              }
              GeneracionMatrices();
+              JOptionPane.showMessageDialog(null, "El Archivo 1 ha sido analizado.");
              
          }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -621,6 +692,65 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         // Acerca de
         JOptionPane.showMessageDialog(null, "Version: 1.0\nAutor:Alexander Morales Catalán\nCarné:201700539");
     }//GEN-LAST:event_jMenu8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // Reporte Tokens Archivo 1
+        Reporte tokens1 = new Reporte();
+        if (!TablaSimbolos1.isEmpty() && Errores1.isEmpty()) {
+            tokens1.Colocar(TablaSimbolos1);
+            tokens1.show();
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "No se puede abrir el reporte de Tokens del Archivo 1");
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+         // Reporte Errores Archivo 2
+        Reporte errores2=new Reporte();
+        if(!Errores2.isEmpty()){
+           errores2.Colocar(Errores2);
+           errores2.show();
+         return;
+        }
+        JOptionPane.showMessageDialog(null, "No se puede abrir el Reporte de Errores del Archivo 2");
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+         // Reporte Tokens Archivo 2
+        Reporte tokens2 = new Reporte();
+        if (!TablaSimbolos2.isEmpty() && Errores2.isEmpty()) {
+            tokens2.Colocar(TablaSimbolos2);
+            tokens2.show();
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "No se puede abrir el reporte de Tokens del Archivo 2");
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // Reporte Errores Archivo 1
+        Reporte errores1=new Reporte();
+        if(!Errores1.isEmpty()){
+           errores1.Colocar(Errores1);
+           errores1.show();
+         return;
+        }
+        JOptionPane.showMessageDialog(null, "No se puede abrir el Reporte de Errores del Archivo 1");
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+          // Se prepara todo para jugar, se coloca el tablero y las piezas
+        if(niveles.isEmpty()  || Piezas.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Los niveles o las piezas no han sido cargados");
+            return;
+        }
+        meta.setText("100");
+        Item pieza=EscogerPieza(piezajuego);
+        CargarPieza(pieza);
+         Niveles();
+         labelnivel.setText(String.valueOf(nivel+1));
+         punteo.setText("0");
+    }//GEN-LAST:event_jMenu6MouseClicked
+
 private int LimpiarFilas(){
     int cantidad=0;
     Matriz tablero=niveles.get(nivel);
@@ -640,7 +770,7 @@ private int LimpiarFilas(){
 }
 private boolean filaLlena(int i,int j,Matriz tablero){
     boolean validar=true;
-    JLabel cuadro=tablero.getMatriz()[i][j];
+    JButton cuadro=tablero.getMatriz()[i][j];
     if(CuadroVacio(cuadro)){
         return false;
     }
@@ -695,7 +825,7 @@ private void AnalizarArchivo1(String texto){
                 }
                 break;
             case 1:
-                if(!Character.isLetterOrDigit(c) || c!='_'){
+                if(!Character.isLetter(c) && !Character.isDigit(c) && c!='_'){
                     Token tk=new Token(lexema,fila,columna,Token.Tipo.id);
                     TablaSimbolos1.add(tk);
                     lexema="";
@@ -776,8 +906,9 @@ private void AnalizarArchivo2(String texto){
             switch (estado) {
                 case 0:
                     if (Character.isLetter(c)) {
-                        String letra = String.valueOf(c).toLowerCase();
-                        if (!letra.equals("i") || !letra.equals("j") || !letra.equals("l") || !letra.equals("o") || !letra.equals("s") || !letra.equals("z") || !letra.equals("t")) {
+                        lexema= String.valueOf(c);
+                        String letra=lexema.toLowerCase();
+                        if (!letra.equals("i")&& !letra.equals("j") && !letra.equals("l") && !letra.equals("o") && !letra.equals("s")&& !letra.equals("z") && !letra.equals("t") && !letra.equals("v")) {
                             Token error = new Token(letra, fila, columna, Token.Tipo.error);
                             Errores2.add(error);
                             lexema = "";
@@ -787,11 +918,13 @@ private void AnalizarArchivo2(String texto){
                         if (letra.equals("v")) {
                             Token tk = new Token(letra, fila, columna, Tipo.abajo);
                             TablaSimbolos2.add(tk);
+                            lexema="";
                             estado = 0;
                             continue;
                         }
                         Token tk = new Token(letra, fila, columna, Tipo.id);
                         TablaSimbolos2.add(tk);
+                        lexema="";
                         estado = 0;
                     } else if (c == ',') {
                         Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.coma);
@@ -876,6 +1009,7 @@ private void AnalizarArchivo2(String texto){
 
                     break;
             }
+            columna++;
         }
 
     }
@@ -885,10 +1019,10 @@ private void GeneracionMatrices(){
             Token tk=TablaSimbolos1.get(i);
             Token tk1=TablaSimbolos1.get(i+1);
             Token tk2=TablaSimbolos1.get(i+2);
-            if(!tk.tipo.equals(Tipo.numero) && !tk1.tipo.equals(Tipo.guion)){
+            if(!tk.tipo.equals(Tipo.numero) || !tk1.tipo.equals(Tipo.guion)){
                 continue;
             }
-            int x=Integer.parseInt(tk.lexema);
+            int x=Integer.parseInt(tk.lexema)+4;
             int y=Integer.parseInt(tk2.lexema);
             int cont=i+3;
             Token idmatriz=TablaSimbolos1.get(cont);
@@ -897,11 +1031,11 @@ private void GeneracionMatrices(){
                 cont++;
                 idmatriz=TablaSimbolos1.get(cont);
             }
-            Matriz matriz=new Matriz(x+4, y, idmatriz.lexema);
+            Matriz matriz=new Matriz(x, y, idmatriz.lexema);
             cont++;
             //se encuentra el inicio de la matriz
             Token start=TablaSimbolos1.get(cont);
-            while(!start.tipo.equals(Tipo.numeral) || !start.tipo.equals(Tipo.asterisco)){
+            while(!start.tipo.equals(Tipo.numeral) && !start.tipo.equals(Tipo.asterisco)){
                 cont++;
                 start=TablaSimbolos1.get(cont);
             }
@@ -909,10 +1043,11 @@ private void GeneracionMatrices(){
             for (int j = 0; j <x; j++) {
                 for (int k = 0; k < y; k++) {
                     Token sim=TablaSimbolos1.get(cont);                    
-                    matriz.getMatriz()[j][k]=new JLabel();
+                    matriz.getMatriz()[j][k]=new JButton();
                     matriz.getMatriz()[j][k].setSize(5,5);
                     if(j<4){
                         matriz.getMatriz()[j][k].setBackground(Color.black);
+                        matriz.getMatriz()[j][k].setVisible(false);
                      continue;   
                     }
                     if(sim.tipo.equals(Tipo.asterisco)){                        
@@ -924,7 +1059,10 @@ private void GeneracionMatrices(){
                 }
             }
             niveles.add(matriz);
-            i=cont;
+            if(cont==TablaSimbolos1.size()){
+                return;
+            }
+            i=cont-1;
         }
     }
 }
@@ -941,27 +1079,29 @@ private void GeneracionPiezas(){
         }
     }
 }
-private void Niveles(int puntos){
+private void Niveles(){
 //     paneljuego.repaint();
-     paneljuego.setBackground(Color.BLACK);
-     labelnivel.setText(String.valueOf(nivel+1));
-     punteo.setText(String.valueOf(puntos));
+   
+//     labelnivel.setText(String.valueOf(nivel+1));
+//     punteo.setText(String.valueOf(puntos));
      
-     paneljuego.removeAll();
+     paneljuego.removeAll();  
+     paneljuego.setBackground(Color.BLACK);
      Matriz tablero=niveles.get(nivel);
      idnivel.setText(tablero.getId());
-        int x=20,y=30;
-        paneljuego.setBounds(20, 20, tablero.getX()*5+10, tablero.getY()*5+10);
+        int x=150,y=50;
+        paneljuego.setBounds(20, 20, 600, 800);
         for (int i = 0; i <tablero.getX(); i++) {
             for (int j = 0; j < tablero.getY(); j++) {
-               tablero.getMatriz()[i][j].setBounds(x, y, 5, 5);
+               tablero.getMatriz()[i][j].setBounds(x, y, 10, 10);
+               tablero.getMatriz()[i][j].setSize(10,10);
                paneljuego.add(tablero.getMatriz()[i][j]);
-               x=x+5;
+               x=x+11;
             }
-            x=20;
-            y=y+5;
+            x=150;
+            y=y+11;
         }
-        panel.add(paneljuego);
+//        panel.add(paneljuego);
         
 }
 private Item EscogerPieza(int index){
@@ -992,13 +1132,15 @@ private void CargarPieza(Item piezasel){
     //se escoge la pieza que necesitamos dentro de nuestro catalogo de piezas, ahi la buscamos
 //       Item piezasel=EscogerPieza(index);       
         //se procede a colocar la pieza en el tablero        
-        JLabel[][] pieza=piezasel.getPieza();
-        JLabel[][] tablero=niveles.get(nivel).getMatriz();
+        JButton[][] pieza=piezasel.getPieza();
+        JButton[][] tablero=niveles.get(nivel).getMatriz();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-               JLabel cuadro=pieza[i][j];
+               JButton cuadro=pieza[i][j];
                if(cuadro!=null){
                    tablero[i][j]=cuadro;
+                   tablero[i][j].setVisible(true);
+                  
                }
             }
             
@@ -1017,8 +1159,8 @@ private void BajarPieza(int x){
          }
         for (int j = 0; j <tablero.getY(); j++) {
             //se bajan las piezas
-            JLabel actual=tablero.getMatriz()[i][j];
-            JLabel sig=tablero.getMatriz()[i+1][j];
+            JButton actual=tablero.getMatriz()[i][j];
+            JButton sig=tablero.getMatriz()[i+1][j];
             if(CuadroVacio(sig) && !CuadroVacio(actual)){
                 Color aux=actual.getBackground();
                 actual.setBackground(sig.getBackground());
@@ -1031,7 +1173,7 @@ private void BajarPieza(int x){
 }
 private boolean Perdiste(Matriz tablero){    
     for (int i = 0; i <tablero.getY(); i++) {
-        JLabel aux=tablero.getMatriz()[4][i];
+        JButton aux=tablero.getMatriz()[4][i];
         if(!CuadroVacio(aux)){
             return true;
         }
@@ -1041,8 +1183,8 @@ private boolean Perdiste(Matriz tablero){
 private boolean SePuedeBajar(int i,int j,Matriz tablero){
     //se verifica que todos los bloques pintados en la fila se puedan bajar
     boolean valido=true;
-     JLabel actual=tablero.getMatriz()[i][j];
-     JLabel sig=tablero.getMatriz()[i+1][j];
+     JButton actual=tablero.getMatriz()[i][j];
+     JButton sig=tablero.getMatriz()[i+1][j];
       if(!CuadroVacio(actual) && !CuadroVacio(sig)){
           valido=false;          
       }
@@ -1066,8 +1208,8 @@ private void MoverDerecha(){
         }
         for (int i = 0; i<tablero.getX(); i++) {
             //se mueven las piezas a la derecha
-            JLabel actual = tablero.getMatriz()[i][j];
-            JLabel sig = tablero.getMatriz()[i][j + 1];
+            JButton actual = tablero.getMatriz()[i][j];
+            JButton sig = tablero.getMatriz()[i][j + 1];
             Color aux = actual.getBackground();
             actual.setBackground(sig.getBackground());
             sig.setBackground(aux);
@@ -1090,8 +1232,8 @@ private void MoverIzquierda(){
         }
         for (int i = 0; i<tablero.getX(); i++) {
             //se mueven las piezas a la derecha
-            JLabel actual = tablero.getMatriz()[i][j];
-            JLabel sig = tablero.getMatriz()[i][j - 1];
+            JButton actual = tablero.getMatriz()[i][j];
+            JButton sig = tablero.getMatriz()[i][j - 1];
             Color aux = actual.getBackground();
             actual.setBackground(sig.getBackground());
             sig.setBackground(aux);
@@ -1103,27 +1245,26 @@ private void MoverIzquierda(){
     }
 }
 private boolean SePuedeMover(int i,int j, Matriz tablero,boolean der){
-  boolean valido=true;
-  int m;
-  if(der){
-     m=j+1;
-  }else{
-      m=j-1;
-  }
-  JLabel actual=tablero.getMatriz()[i][j];
-     JLabel sig=tablero.getMatriz()[i][m];
-      if(!CuadroVacio(actual) && !CuadroVacio(sig)){
-          valido=false;          
-      }
-      
-      
-      if(i<4){
-          i++;
-         return valido&&SePuedeBajar(i,j,tablero);
-      }
-  return valido;  
+    boolean valido = true;
+    int m;
+    if (der) {
+        m = j + 1;
+    } else {
+        m = j - 1;
+    }
+    JButton actual = tablero.getMatriz()[i][j];
+    JButton sig = tablero.getMatriz()[i][m];
+    if (!CuadroVacio(actual) && !CuadroVacio(sig)) {
+        valido = false;
+    }
+
+    if (i < 4) {
+        i++;
+        return valido && SePuedeBajar(i, j, tablero);
+    }
+    return valido;
 }
-private boolean CuadroVacio(JLabel cuadro){
+private boolean CuadroVacio(JButton cuadro){
     boolean val=false;
     if(cuadro.getBackground().equals(Color.black) || cuadro.getBackground().equals(Color.white)){
         val=true;
@@ -1166,6 +1307,7 @@ private boolean CuadroVacio(JLabel cuadro){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel color;
     private javax.swing.JLabel idnivel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1176,26 +1318,31 @@ private boolean CuadroVacio(JLabel cuadro){
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JLabel labelnivel;
     private javax.swing.JLabel level;
     private javax.swing.JLabel meta;
     private javax.swing.JPanel panel;
+    private javax.swing.JPanel paneljuego;
     private javax.swing.JLabel punteo;
     // End of variables declaration//GEN-END:variables
 }
