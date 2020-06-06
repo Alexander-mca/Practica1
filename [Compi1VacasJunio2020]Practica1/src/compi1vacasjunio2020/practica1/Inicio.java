@@ -37,7 +37,7 @@ Item [][] CatalogoPiezas=new Item[7][4];
 JPanel paneljuego=new JPanel();
 
 String archivo1,archivo2;
-int nivel=0,piezajuego=0,puntuacion=0;
+int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
     /**
      * Creates new form Inicio
      */
@@ -58,7 +58,18 @@ int nivel=0,piezajuego=0,puntuacion=0;
         }
     }
     private void RotarPieza(){
-        
+        Pieza pieza1=Piezas.get(piezajuego);
+        rotacion++;
+        for (int i = 0; i < 7; i++) {
+            if(rotacion>3){
+                rotacion=0;
+            }
+            Item pieza2=CatalogoPiezas[i][rotacion];
+            if(!pieza1.getPieza().equals(pieza2.getDatos().getPieza())){
+               CargarPieza(pieza2);    
+            }
+            
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,6 +95,7 @@ int nivel=0,piezajuego=0,puntuacion=0;
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         meta = new javax.swing.JLabel();
+        level = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -92,6 +104,8 @@ int nivel=0,piezajuego=0,puntuacion=0;
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -105,6 +119,11 @@ int nivel=0,piezajuego=0,puntuacion=0;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Izquierda");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Derecha");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +133,11 @@ int nivel=0,piezajuego=0,puntuacion=0;
         });
 
         jButton3.setText("Rotar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Punteo:");
 
@@ -155,9 +179,11 @@ int nivel=0,piezajuego=0,puntuacion=0;
                                     .addComponent(jLabel2)))
                             .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(panelLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(12, 12, 12)
                                     .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                                            .addComponent(level, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(labelnivel)
                                             .addGap(64, 64, 64))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
@@ -188,7 +214,8 @@ int nivel=0,piezajuego=0,puntuacion=0;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelnivel)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(level))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -232,6 +259,11 @@ int nivel=0,piezajuego=0,puntuacion=0;
         });
 
         jMenuItem3.setText("Archivo 1");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Archivo 2");
@@ -244,7 +276,19 @@ int nivel=0,piezajuego=0,puntuacion=0;
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Instrucciones");
+        jMenu3.setText("Ayuda");
+
+        jMenu7.setText("Manual");
+        jMenu3.add(jMenu7);
+
+        jMenu8.setText("Acerca De");
+        jMenu8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu8ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenu8);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reportes");
@@ -271,6 +315,11 @@ int nivel=0,piezajuego=0,puntuacion=0;
         jMenuBar1.add(jMenu6);
 
         jMenu5.setText("Salir");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -385,18 +434,18 @@ int nivel=0,piezajuego=0,puntuacion=0;
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // analizador lexico del archivo 1
-        TablaSimbolos1.clear();
-        Errores1.clear();
-        niveles.clear();
-         if(archivo1!=null){
-             AnalizarArchivo1(archivo1);
-             if(!Errores1.isEmpty()){
-                 JOptionPane.showMessageDialog(null, "Existen errores Léxicos en el Archivo 1");
-                 return;
-             }
-             GeneracionMatrices();
-             
-         }
+//        TablaSimbolos1.clear();
+//        Errores1.clear();
+//        niveles.clear();
+//         if(archivo1!=null){
+//             AnalizarArchivo1(archivo1);
+//             if(!Errores1.isEmpty()){
+//                 JOptionPane.showMessageDialog(null, "Existen errores Léxicos en el Archivo 1");
+//                 return;
+//             }
+//             GeneracionMatrices();
+//             
+//         }
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -422,76 +471,156 @@ int nivel=0,piezajuego=0,puntuacion=0;
             return;
         }
         meta.setText("100");
-       
-        CargarPieza(piezajuego);
+        Item pieza=EscogerPieza(piezajuego);
+        CargarPieza(pieza);
          Niveles(0);
+         level.setText("0");
         
     }//GEN-LAST:event_jMenu6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // La pieza se mueve hacia la derecha
+        for (int i = 0; i < 4; i++) {
+            MoverDerecha();
+        }
+        Niveles(nivel);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Cuando la pieza ya esta posicionada se baja(Bajar Pieza)
-        Matriz tablero=niveles.get(nivel);
+        Matriz tablero = niveles.get(nivel);
         for (int i = 0; i < 4; i++) {
             //se baja la pieza
             BajarPieza(0);
         }
-        
-         //se limpian filas totalmente pintadas, se añade un contador para analizar cuantos purntos ganó
-         int premio=LimpiarFilas();   
-//         Niveles(nivel);
-    //se analiza cuantos puntos gana con esta jugada
-    switch (premio) {
-        case 1:
-            puntuacion+=10;
-            break;
-        case 2:
-            puntuacion+=15;
-            break;
-        default:
-            puntuacion+=20;
-            break;
-    }
-        //se bajan todas las filas
-         for (int i = 4; i <tablero.getX(); i++) {
-            BajarPieza(4);
+        //se limpian filas totalmente pintadas, se añade un contador para analizar cuantos purntos ganó
+        //         Niveles(nivel);
+        int premio = LimpiarFilas();
+        //por si luego de bajar filas puedan quedar filas llenas
+        while (premio != 0) {
+
+            //se bajan todas las filas
+            for (int i = 4; i < tablero.getX(); i++) {
+                BajarPieza(4);
+            }
+            //se analiza cuantos puntos gana con esta jugada
+            int punt1=Integer.parseInt(punteo.getText());
+            switch (premio) {
+                case 1:
+                    puntuacion += 10;
+                    punt1+=10;
+                    break;
+                case 2:
+                    puntuacion += 15;
+                    punt1+=15;
+                    break;
+                default:
+                    puntuacion += 20;
+                    punt1+=20;
+                    break;
+            }
+            punteo.setText(String.valueOf(punt1));
+            premio = LimpiarFilas();
         }
-        //se verifica si alcanzo el punteo maxico     
-            int mt=Integer.parseInt(meta.getText());
-            int punt= Integer.parseInt(punteo.getText());
-        if(punt>=mt){
-            JOptionPane.showMessageDialog(null, "Nivel "+(nivel+1)+" superado.");
-            nivel++;
+        //se revisa si el jugador perdió, si perdió se reinicia el nivel
+        if(Perdiste(tablero)){
+            JOptionPane.showMessageDialog(null, "Has perdido.");
+            int punt=Integer.parseInt(punteo.getText());            
+            puntuacion-=punt;
+            GeneracionMatrices();
+            piezajuego=0;
+            Item pieza=EscogerPieza(piezajuego);
+            CargarPieza(pieza);            
             Niveles(nivel);
-            puntuacion+=punt;
+            punteo.setText("0");
+            return;
+            
+        }
+        //se verifica si alcanzo el punteo maximo     
+        int mt = Integer.parseInt(meta.getText());
+        int punt = Integer.parseInt(punteo.getText());
+        if (punt >= mt) {
+            JOptionPane.showMessageDialog(null, "Nivel " + (nivel + 1) + " superado.");
+            nivel++;
+            piezajuego=0;
+            Item pieza1=EscogerPieza(piezajuego);
+            CargarPieza(pieza1);
+            Niveles(nivel);
+            puntuacion += punt;
+            String nombre=niveles.get(nivel).getId();
             //se calcula la meta para el siguiente nivel
-            mt=2*punt+100;   
-            meta.setText(String.valueOf(mt));         
-        }         
-        if(niveles.size()==nivel){
-               int resp = JOptionPane.showConfirmDialog(null, "Has terminado el juego.\nObtuviste un total de "+puntuacion+" puntos.\n¿Quieres Volver a Jugar?", "Felicidades", JOptionPane.YES_NO_OPTION);
-                //se reinicia el juego
-                if(resp==1){
-                nivel=0;
+            mt = 2 * punt + 100;
+            meta.setText(String.valueOf(mt));
+            level.setText(String.valueOf(nivel));
+            idnivel.setText(nombre);
+            
+            
+            punteo.setText("0");
+        }
+        if (niveles.size() == nivel) {
+            int resp = JOptionPane.showConfirmDialog(null, "Has terminado el juego.\nObtuviste un total de " + puntuacion + " puntos.\n¿Quieres Volver a Jugar?", "Felicidades", JOptionPane.YES_NO_OPTION);
+            //se reinicia el juego
+            if (resp == 1) {
+                nivel = 0;
                 punteo.setText("0");
                 Niveles(nivel);
                 meta.setText("100");
-                }
-                return;
             }
+            return;
+        }
         //se cargan ciclicamente las piezas
-            piezajuego++;
-            if(piezajuego==Piezas.size()){
-                piezajuego=0;
-            }
-            
-            CargarPieza(piezajuego);
-            Niveles(nivel);
-           
+        piezajuego++;
+        if (piezajuego == Piezas.size()) {
+            piezajuego = 0;
+        }
+        Item pieza = EscogerPieza(piezajuego);
+        CargarPieza(pieza);
+        Niveles(nivel);
+
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // se rota la pieza
+        RotarPieza();
+        Niveles(nivel);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Se mueve la pieza a la izquierda
+        for (int i = 0; i <4; i++) {
+            MoverIzquierda();
+        }
+        Niveles(nivel);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // salir
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere cerrar el juego?", "Alerta", JOptionPane.YES_NO_OPTION);
+        if(resp==1){
+            this.dispose();
+        }   
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // Analisis archivo 1
+         TablaSimbolos1.clear();
+        Errores1.clear();
+        niveles.clear();
+         if(archivo1!=null){
+             AnalizarArchivo1(archivo1);
+             if(!Errores1.isEmpty()){
+                 JOptionPane.showMessageDialog(null, "Existen errores Léxicos en el Archivo 1");
+                 return;
+             }
+             GeneracionMatrices();
+             
+         }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenu8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu8ActionPerformed
+        // Acerca de
+        JOptionPane.showMessageDialog(null, "Version: 1.0\nAutor:Alexander Morales Catalán\nCarné:201700539");
+    }//GEN-LAST:event_jMenu8ActionPerformed
 private int LimpiarFilas(){
     int cantidad=0;
     Matriz tablero=niveles.get(nivel);
@@ -647,13 +776,21 @@ private void AnalizarArchivo2(String texto){
             switch (estado) {
                 case 0:
                     if (Character.isLetter(c)) {
-                        if (c == 'v') {
-                            Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.abajo);
+                        String letra = String.valueOf(c).toLowerCase();
+                        if (!letra.equals("i") || !letra.equals("j") || !letra.equals("l") || !letra.equals("o") || !letra.equals("s") || !letra.equals("z") || !letra.equals("t")) {
+                            Token error = new Token(letra, fila, columna, Token.Tipo.error);
+                            Errores2.add(error);
+                            lexema = "";
+                            estado = 0;
+                            continue;
+                        }
+                        if (letra.equals("v")) {
+                            Token tk = new Token(letra, fila, columna, Tipo.abajo);
                             TablaSimbolos2.add(tk);
                             estado = 0;
                             continue;
                         }
-                        Token tk = new Token(String.valueOf(c), fila, columna, Token.Tipo.id);
+                        Token tk = new Token(letra, fila, columna, Tipo.id);
                         TablaSimbolos2.add(tk);
                         estado = 0;
                     } else if (c == ',') {
@@ -827,10 +964,10 @@ private void Niveles(int puntos){
         panel.add(paneljuego);
         
 }
-private void CargarPieza(int index){
-    //se escoge la pieza que necesitamos dentro de nuestro catalogo de piezas, ahi la buscamos
-    if(!Piezas.isEmpty()){
-        Item piezasel=null;
+private Item EscogerPieza(int index){
+    Item piezasel=null;
+     if(!Piezas.isEmpty()){
+        
         for (int i = 0; i < 7; i++) {
              Pieza pz=Piezas.get(index);
              Pieza pz2=CatalogoPiezas[i][0].getDatos();
@@ -840,19 +977,21 @@ private void CargarPieza(int index){
                    pz2= m.getDatos();
                    if(pz2.getOrientacion().equals(pz.getOrientacion())){
                        piezasel=m;
-                       break;
+                       rotacion=j;
+                       return piezasel;
                    }
                 }
-               break;
+               
             }
             
         }
-        if(piezasel==null){
-            JOptionPane.showConfirmDialog(null, "La pieza que se esta solicitando\nno existe en el catalogo de piezas.");
-            return;
-        }
-        //se procede a colocar la pieza en el tablero
-        
+     }
+     return piezasel;
+}
+private void CargarPieza(Item piezasel){
+    //se escoge la pieza que necesitamos dentro de nuestro catalogo de piezas, ahi la buscamos
+//       Item piezasel=EscogerPieza(index);       
+        //se procede a colocar la pieza en el tablero        
         JLabel[][] pieza=piezasel.getPieza();
         JLabel[][] tablero=niveles.get(nivel).getMatriz();
         for (int i = 0; i < 4; i++) {
@@ -864,7 +1003,6 @@ private void CargarPieza(int index){
             }
             
         }
-    }
 }
 private void BajarPieza(int x){
     //se debe ejecutar 4 veces
@@ -891,6 +1029,15 @@ private void BajarPieza(int x){
         }
     }
 }
+private boolean Perdiste(Matriz tablero){    
+    for (int i = 0; i <tablero.getY(); i++) {
+        JLabel aux=tablero.getMatriz()[4][i];
+        if(!CuadroVacio(aux)){
+            return true;
+        }
+    }
+    return false;
+}
 private boolean SePuedeBajar(int i,int j,Matriz tablero){
     //se verifica que todos los bloques pintados en la fila se puedan bajar
     boolean valido=true;
@@ -906,6 +1053,75 @@ private boolean SePuedeBajar(int i,int j,Matriz tablero){
          return valido&&SePuedeBajar(i,j,tablero);
       }
     return valido;
+}
+private void MoverDerecha(){
+    Matriz tablero=niveles.get(nivel);
+    int limiteY=tablero.getY()-1;
+    for (int j = 0; j <tablero.getY(); j++) {
+        if(limiteY==j){
+            return;
+        }
+        if(!SePuedeMover(0,j,tablero,true)){
+            continue;
+        }
+        for (int i = 0; i<tablero.getX(); i++) {
+            //se mueven las piezas a la derecha
+            JLabel actual = tablero.getMatriz()[i][j];
+            JLabel sig = tablero.getMatriz()[i][j + 1];
+            Color aux = actual.getBackground();
+            actual.setBackground(sig.getBackground());
+            sig.setBackground(aux);
+            tablero.getMatriz()[i][j] = actual;
+            tablero.getMatriz()[i][j+1] = sig;
+        }
+            
+            
+    }
+}
+private void MoverIzquierda(){
+     Matriz tablero=niveles.get(nivel);
+    
+    for (int j = tablero.getY(); j>=0; j++) {
+        if(j==0){
+            return;
+        }
+        if(!SePuedeMover(0,j,tablero,false)){
+            continue;
+        }
+        for (int i = 0; i<tablero.getX(); i++) {
+            //se mueven las piezas a la derecha
+            JLabel actual = tablero.getMatriz()[i][j];
+            JLabel sig = tablero.getMatriz()[i][j - 1];
+            Color aux = actual.getBackground();
+            actual.setBackground(sig.getBackground());
+            sig.setBackground(aux);
+            tablero.getMatriz()[i][j] = actual;
+            tablero.getMatriz()[i][j-1] = sig;
+        }
+            
+            
+    }
+}
+private boolean SePuedeMover(int i,int j, Matriz tablero,boolean der){
+  boolean valido=true;
+  int m;
+  if(der){
+     m=j+1;
+  }else{
+      m=j-1;
+  }
+  JLabel actual=tablero.getMatriz()[i][j];
+     JLabel sig=tablero.getMatriz()[i][m];
+      if(!CuadroVacio(actual) && !CuadroVacio(sig)){
+          valido=false;          
+      }
+      
+      
+      if(i<4){
+          i++;
+         return valido&&SePuedeBajar(i,j,tablero);
+      }
+  return valido;  
 }
 private boolean CuadroVacio(JLabel cuadro){
     boolean val=false;
@@ -965,6 +1181,8 @@ private boolean CuadroVacio(JLabel cuadro){
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -975,6 +1193,7 @@ private boolean CuadroVacio(JLabel cuadro){
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JLabel labelnivel;
+    private javax.swing.JLabel level;
     private javax.swing.JLabel meta;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel punteo;
