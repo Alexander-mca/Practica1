@@ -38,7 +38,7 @@ public class Item {
                     if(tipo.equals(Tipo.arriba) || tipo.equals(Tipo.abajo)){
                         for (int i = 0; i < 4; i++) {
                             pieza[i][0]=new JButton();
-                            pieza[i][0].setSize(5,5);
+//                            pieza[i][0].setSize(5,5);
                             pieza[i][0].setBackground(Color.cyan);
                            
                         }
@@ -46,7 +46,7 @@ public class Item {
                     if(tipo.equals(Tipo.menor)   || tipo.equals(Tipo.mayor)){
                          for (int i = 0; i < 4; i++) {
                             pieza[2][i]=new JButton();
-                            pieza[2][i].setSize(5,5);
+//                            pieza[2][i].setSize(5,5);
                             pieza[2][i].setBackground(Color.cyan);
                         }
                     }
@@ -62,12 +62,12 @@ public class Item {
                             pieza[3][0].setBackground(Color.blue);
                             break;
                         case abajo:
-                             for (int i = 1; i < 4; i++) {
+                             for (int i = 0; i < 3; i++) {
                                 pieza[i][1]=new JButton();
                                 pieza[i][1].setBackground(Color.blue);
                             }
-                            pieza[1][2]=new JButton();
-                            pieza[1][2].setBackground(Color.blue);
+                            pieza[0][2]=new JButton();
+                            pieza[0][2].setBackground(Color.blue);
                             break;
                         case mayor:
                              for (int i = 0; i < 3; i++) {
@@ -95,24 +95,24 @@ public class Item {
                                 pieza[i][1]=new JButton();
                                 pieza[i][1].setBackground(Color.orange);
                             }
-                            pieza[3][2]=new JButton();
-                            pieza[3][2].setBackground(Color.orange);
+                            pieza[2][2]=new JButton();
+                            pieza[2][2].setBackground(Color.orange);
                             break;
                         case abajo:
-                             for (int i = 1; i < 4; i++) {
+                             for (int i = 0; i < 3; i++) {
                                 pieza[i][1]=new JButton();
                                 pieza[i][1].setBackground(Color.orange);
                             }
-                            pieza[1][0]=new JButton();
-                            pieza[1][0].setBackground(Color.orange);
+                            pieza[0][0]=new JButton();
+                            pieza[0][0].setBackground(Color.orange);
                             break;
                         case mayor:
                              for (int i = 0; i < 3; i++) {
-                                pieza[2][i]=new JButton();
-                                pieza[2][i].setBackground(Color.orange);
+                                pieza[1][i]=new JButton();
+                                pieza[1][i].setBackground(Color.orange);
                             }
-                            pieza[3][0]=new JButton();
-                            pieza[3][0].setBackground(Color.orange);
+                            pieza[2][0]=new JButton();
+                            pieza[2][0].setBackground(Color.orange);
                             break;
                         case menor:
                             for (int i = 0; i < 3; i++) {
@@ -181,7 +181,7 @@ public class Item {
                             pieza[1][0].setBackground(Color.magenta);
                             break;
                         case menor:
-                             for (int i = 1; i < 4; i++) {
+                             for (int i = 0; i < 3; i++) {
                                 pieza[i][1]=new JButton();
                                 pieza[i][1].setBackground(Color.magenta);
                             }

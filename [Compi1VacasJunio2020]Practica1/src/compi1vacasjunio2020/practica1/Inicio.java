@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -47,7 +49,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
     public Inicio() {
         initComponents();
         CrearCatalogo();
-        color.setBackground(Color.red);
+        
         
     }
     
@@ -65,15 +67,26 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
     private void RotarPieza(){
         Pieza pieza1=Piezas.get(piezajuego);
         rotacion++;
-        for (int i = 0; i < 7; i++) {
+       
             if(rotacion>3){
                 rotacion=0;
             }
-            Item pieza2=CatalogoPiezas[i][rotacion];
-            if(!pieza1.getPieza().equals(pieza2.getDatos().getPieza())){
-               CargarPieza(pieza2);    
+            Item pieza2=EscogerPiezaCatalogo(pieza1.getPieza(), rotacion);
+            if(pieza2!=null){
+               RePaint();
+               CargarPieza(pieza2);
+               ActualizarNivel();            
             }
             
+        
+    }
+    private void RePaint(){
+        Matriz tablero=niveles.get(nivel);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < tablero.getY(); j++) {
+                tablero.getMatriz()[i][j].setBackground(Color.black);
+                tablero.getMatriz()[i][j].setVisible(false);
+            }
         }
     }
     /**
@@ -101,7 +114,6 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         jLabel4 = new javax.swing.JLabel();
         meta = new javax.swing.JLabel();
         level = new javax.swing.JLabel();
-        color = new javax.swing.JLabel();
         paneljuego = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -128,6 +140,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         jMenuItem8.setText("jMenuItem8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(200, 100));
         setResizable(false);
 
         jButton1.setText("Izquierda");
@@ -184,10 +197,6 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
-            .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(paneljuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -234,11 +243,9 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(41, 41, 41)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(meta))
@@ -255,19 +262,18 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(idnivel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
-                        .addGap(39, 39, 39))
+                        .addComponent(jButton4))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(paneljuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(37, 37, 37)
+                        .addComponent(paneljuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(39, 39, 39))
         );
 
         jMenu1.setText("Abrir Archivos");
@@ -403,7 +409,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,15 +559,25 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         for (int i = 0; i < 4; i++) {
             MoverDerecha();
         }
-        Niveles();
+//        Niveles();
+        ActualizarNivel();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Cuando la pieza ya esta posicionada se baja(Bajar Pieza)
         Matriz tablero = niveles.get(nivel);
-        for (int i = 0; i < 4; i++) {
-            //se baja la pieza
-            BajarPieza(0);
+        Pieza piezaes = Piezas.get(piezajuego);
+        Item pz1 = EscogerPiezaCatalogo(piezaes.getPieza(), rotacion);
+        Pieza pzselect = pz1.getDatos();
+        if (pzselect.getPieza().equals("l") && pzselect.getOrientacion().equals(Tipo.mayor)) {
+            BajarPiezaLJ();
+        } else if (pzselect.getPieza().equals("j") && pzselect.getOrientacion().equals(Tipo.menor)) {
+            BajarPiezaLJ();
+        } else {
+            for (int i = 0; i < 4; i++) {
+                //se baja la pieza
+                BajarPieza();
+            }
         }
         //se limpian filas totalmente pintadas, se añade un contador para analizar cuantos purntos ganó
         //         Niveles(nivel);
@@ -571,7 +587,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
 
             //se bajan todas las filas
             for (int i = 4; i < tablero.getX(); i++) {
-                BajarPieza(4);
+                BajarCuadros();
             }
             //se analiza cuantos puntos gana con esta jugada
             int punt1=Integer.parseInt(punteo.getText());
@@ -644,7 +660,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         }
         Item pieza = EscogerPieza(piezajuego);
         CargarPieza(pieza);
-        Niveles();
+//        Niveles();
+        ActualizarNivel();
         
 
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -652,7 +669,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // se rota la pieza
         RotarPieza();
-        Niveles();
+//        Niveles();
+//        ActualizarNivel();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -660,7 +678,8 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         for (int i = 0; i <4; i++) {
             MoverIzquierda();
         }
-        Niveles();
+//        Niveles();
+          ActualizarNivel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
@@ -1079,27 +1098,51 @@ private void GeneracionPiezas(){
         }
     }
 }
+private void ActualizarNivel(){     
+  
+     Matriz tablero=niveles.get(nivel);     
+        
+        for (int i = 0; i <tablero.getX(); i++) {
+            for (int j = 0; j < tablero.getY(); j++) {
+                 JButton cuadro1=tablero.getMatriz()[i][j];
+                  
+//                 Rectangle location=cuadro1.getBounds();
+                 Point p=cuadro1.getLocation();
+                 Object cuadro=paneljuego.getComponentAt(p);
+                 if(cuadro instanceof JButton){
+                  JButton buton=(JButton)cuadro;
+                   Color color=cuadro1.getBackground();
+                   buton.setBackground(color);
+                 }
+            }
+            
+        }
+}
 private void Niveles(){
 //     paneljuego.repaint();
    
 //     labelnivel.setText(String.valueOf(nivel+1));
 //     punteo.setText(String.valueOf(puntos));
      
-     paneljuego.removeAll();  
+//     paneljuego.removeAll();  
+     
      paneljuego.setBackground(Color.BLACK);
+  
      Matriz tablero=niveles.get(nivel);
      idnivel.setText(tablero.getId());
-        int x=150,y=50;
+        int x=170,y=40;
         paneljuego.setBounds(20, 20, 600, 800);
         for (int i = 0; i <tablero.getX(); i++) {
             for (int j = 0; j < tablero.getY(); j++) {
-               tablero.getMatriz()[i][j].setBounds(x, y, 10, 10);
-               tablero.getMatriz()[i][j].setSize(10,10);
+               niveles.get(nivel).getMatriz()[i][j].setBounds(x, y, 13, 13);
+                niveles.get(nivel).getMatriz()[i][j].setLocation(x, y);
+//               tablero.getMatriz()[i][j].setAlignmentY(y);
+//               tablero.getMatriz()[i][j].setSize(13,13);
                paneljuego.add(tablero.getMatriz()[i][j]);
-               x=x+11;
+               x=x+14;
             }
-            x=150;
-            y=y+11;
+            x=170;
+            y=y+14;
         }
 //        panel.add(paneljuego);
         
@@ -1129,48 +1172,232 @@ private Item EscogerPieza(int index){
      return piezasel;
 }
 private void CargarPieza(Item piezasel){
-    //se escoge la pieza que necesitamos dentro de nuestro catalogo de piezas, ahi la buscamos
+        //se escoge la pieza que necesitamos dentro de nuestro catalogo de piezas, ahi la buscamos
 //       Item piezasel=EscogerPieza(index);       
         //se procede a colocar la pieza en el tablero        
-        JButton[][] pieza=piezasel.getPieza();
-        JButton[][] tablero=niveles.get(nivel).getMatriz();
+        JButton[][] pieza = piezasel.getPieza();
+        JButton[][] tablero = niveles.get(nivel).getMatriz();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-               JButton cuadro=pieza[i][j];
-               if(cuadro!=null){
-                   tablero[i][j]=cuadro;
-                   tablero[i][j].setVisible(true);
-                  
-               }
+                JButton cuadro = pieza[i][j];
+                if (cuadro == null) {
+                    tablero[i][j].setVisible(false);
+                    continue;
+                }
+//                JButton aux=tablero[i][j];
+                
+                tablero[i][j].setBackground(cuadro.getBackground());
+                tablero[i][j].setVisible(true);
+                
+
             }
-            
+
         }
-}
-private void BajarPieza(int x){
-    //se debe ejecutar 4 veces
-    Matriz tablero=niveles.get(nivel);
-    int limite1=tablero.getX()-1;
-    for (int i = x; i < tablero.getX(); i++) {
-            if(i==limite1){
-                return;
+    }
+private void BajarPiezaLJ(){
+        Matriz tablero = niveles.get(nivel);
+        int val = 1;
+        int sigval = val + 1;
+        boolean bajar = true;
+        while (sigval < tablero.getX() - 1) {
+            //para bajar una
+            JButton actual=null,sig=null;
+            
+            for (int j = 0; j < tablero.getY() - 1; j++) {
+                //para bajar la parte con solo un cuadro de la pieza
+                actual = tablero.getMatriz()[sigval][j];
+                sig = tablero.getMatriz()[sigval + 1][j];
+                if (CuadroVacio(actual)) {
+                    continue;
+                }
+                //para bajar las que solo tienen 1 cuadro
+                Color aux = actual.getBackground();
+                if (CuadroVacio(sig)) {
+                    actual.setBackground(sig.getBackground());
+                    sig.setBackground(aux);
+                    break;
+                }
+
             }
-         if(!SePuedeBajar(i,0,tablero)){
-             continue;
-         }
-        for (int j = 0; j <tablero.getY(); j++) {
-            //se bajan las piezas
-            JButton actual=tablero.getMatriz()[i][j];
-            JButton sig=tablero.getMatriz()[i+1][j];
-            if(CuadroVacio(sig) && !CuadroVacio(actual)){
+            for (int j = 0; j < tablero.getY() - 1; j++) {
+
+                //aca se bajara la fila anterior
+                JButton cuadro1 = tablero.getMatriz()[val][j];
+                JButton cuadro2 = tablero.getMatriz()[val][j + 1];
+                JButton sigc1 = tablero.getMatriz()[sigval][j];
+                if (CuadroVacio(cuadro1)) {
+                    continue;
+                }
+                //para bajar laa que solo tienen 1 cuadro
+                Color colorc1 = cuadro1.getBackground();
+                if (CuadroVacio(cuadro2)) {
+                    continue;
+                }
+                JButton sigc2 = tablero.getMatriz()[sigval][j + 1];
+                j++;
+                if (j == tablero.getY() - 2) {
+                    break;
+                }
+                //para bajar dos juntos
+                Color aux2 = cuadro2.getBackground();
+                JButton cuadro3 = tablero.getMatriz()[val][j + 1];
+                if (CuadroVacio(cuadro3)) {
+                    continue;
+                }
+                JButton sigc3 = tablero.getMatriz()[sigval][j + 1];
+                j++;
+                if (j == tablero.getY() - 3) {
+                    break;
+                }
+                //para bajar piezas de 3 cuadros juntos
+                Color aux3 = cuadro3.getBackground();
+                bajar = CuadroVacio(sigc1) && CuadroVacio(sigc2) && CuadroVacio(sigc3);
+                if (bajar) {
+                    cuadro1.setBackground(sigc1.getBackground());
+                    cuadro2.setBackground(sigc2.getBackground());
+                    cuadro3.setBackground(sigc3.getBackground());
+                    sigc1.setBackground(colorc1);
+                    sigc2.setBackground(aux2);
+                    sigc3.setBackground(aux3);
+                }else {
+                    if (actual != null && sig != null) {
+                        Color aux = actual.getBackground();
+                        actual.setBackground(sig.getBackground());
+                        sig.setBackground(aux);
+                        return;
+                    }
+                }
+
+            }
+            val++;
+            sigval++;
+        }
+    }
+
+private void BajarCuadros(){
+    Matriz tablero = niveles.get(nivel);
+        int limite1 = tablero.getX() - 1;
+        for (int i = 0; i <tablero.getX(); i++) {
+          if(i==limite1){
+              return;
+          }
+            for (int j = 0; j < tablero.getY()-1; j++) {
+                JButton actual = tablero.getMatriz()[i][j];
+                JButton sig = tablero.getMatriz()[i + 1][j];
+                if (CuadroVacio(actual)) {
+                    continue;
+                }
+                if(!CuadroVacio(sig)){
+                    continue;
+                }
                 Color aux=actual.getBackground();
                 actual.setBackground(sig.getBackground());
                 sig.setBackground(aux);
-                tablero.getMatriz()[i][j]=actual;
-                tablero.getMatriz()[i+1][j]=sig;
+            }
+    }
+}
+private Item EscogerPiezaCatalogo(String letra,int orientacion){
+    Item pieza=null;
+    
+    for (int i = 0; i <7; i++) {
+        Item pz1=CatalogoPiezas[i][orientacion];
+        if(letra.equals(pz1.getDatos().getPieza())){
+            pieza=pz1;
+            return pieza;
+        }
+        
+    }
+    return pieza;
+}
+private void BajarPieza(){
+        
+        //se debe ejecutar 4 veces
+        Matriz tablero = niveles.get(nivel);
+        int limite1 = tablero.getX() - 1;
+        for (int i = 0; i < tablero.getX(); i++) {
+            if (i == limite1) {
+                return;
+            }
+//         if(!SePuedeBajar(i,0,tablero)){
+//             continue;
+//         }
+            for (int j = 0; j < tablero.getY() - 1; j++) {
+                //se bajan las piezas
+
+                JButton actual = tablero.getMatriz()[i][j];
+                JButton der = tablero.getMatriz()[i][j + 1];
+                JButton sig = tablero.getMatriz()[i + 1][j];
+                if (CuadroVacio(actual)) {
+                    continue;
+                }
+                //para bajar laa que solo tienen 1 cuadro
+                Color aux = actual.getBackground();
+                if (CuadroVacio(der)) {
+                    if (CuadroVacio(sig)) {                        
+                        actual.setBackground(sig.getBackground());
+                        sig.setBackground(aux);
+//                tablero.getMatriz()[i][j]=actual;
+//                tablero.getMatriz()[i+1][j]=sig;
+                    }
+                    continue;
+                }
+                JButton dersig = tablero.getMatriz()[i + 1][j + 1];
+                j++;
+                if (j == tablero.getY() - 2) {
+                    continue;
+                }
+                //para bajar dos juntos
+                Color aux2 = der.getBackground();
+                JButton cuadro3 = tablero.getMatriz()[i][j + 1];
+                if (CuadroVacio(cuadro3)) {
+                    if (CuadroVacio(sig) && CuadroVacio(dersig)) {
+                        
+                        
+                        actual.setBackground(sig.getBackground());
+                        der.setBackground(dersig.getBackground());
+                        sig.setBackground(aux);
+                        dersig.setBackground(aux2);
+                    }
+                    continue;
+                }
+                JButton sigc3 = tablero.getMatriz()[i + 1][j + 1];
+                j++;
+                if (j == tablero.getY() - 3) {
+                    continue;
+                }
+                //para bajar piezas de 3 cuadros juntos
+                Color aux3=cuadro3.getBackground();
+                JButton cuadro4 = tablero.getMatriz()[i][j + 1];
+                if (CuadroVacio(cuadro4)) {
+                    if(CuadroVacio(sig)&& CuadroVacio(dersig)&&CuadroVacio(sigc3)){
+                    
+                    
+                    actual.setBackground(sig.getBackground());
+                    der.setBackground(dersig.getBackground());
+                    cuadro3.setBackground(sigc3.getBackground());
+                    sig.setBackground(aux);
+                    dersig.setBackground(aux2);                  
+                    sigc3.setBackground(aux3);
+                    }
+                    continue;
+                }
+                //para bajar 4 cuadros
+                Color aux4=cuadro4.getBackground();
+                JButton sigc4=tablero.getMatriz()[i+1][j+1];
+                j++;
+                if(CuadroVacio(sig)&&CuadroVacio(dersig)&&CuadroVacio(sigc3)&&CuadroVacio(sigc4)){
+                     actual.setBackground(sig.getBackground());
+                    der.setBackground(dersig.getBackground());
+                    cuadro3.setBackground(sigc3.getBackground());
+                    cuadro4.setBackground(sigc4.getBackground());
+                    sig.setBackground(aux);
+                    dersig.setBackground(aux2);                  
+                    sigc3.setBackground(aux3);
+                    sigc4.setBackground(aux4);
+                }
             }
         }
     }
-}
 private boolean Perdiste(Matriz tablero){    
     for (int i = 0; i <tablero.getY(); i++) {
         JButton aux=tablero.getMatriz()[4][i];
@@ -1213,8 +1440,8 @@ private void MoverDerecha(){
             Color aux = actual.getBackground();
             actual.setBackground(sig.getBackground());
             sig.setBackground(aux);
-            tablero.getMatriz()[i][j] = actual;
-            tablero.getMatriz()[i][j+1] = sig;
+//            tablero.getMatriz()[i][j] = actual;
+//            tablero.getMatriz()[i][j+1] = sig;
         }
             
             
@@ -1237,8 +1464,8 @@ private void MoverIzquierda(){
             Color aux = actual.getBackground();
             actual.setBackground(sig.getBackground());
             sig.setBackground(aux);
-            tablero.getMatriz()[i][j] = actual;
-            tablero.getMatriz()[i][j-1] = sig;
+//            tablero.getMatriz()[i][j] = actual;
+//            tablero.getMatriz()[i][j-1] = sig;
         }
             
             
@@ -1307,7 +1534,6 @@ private boolean CuadroVacio(JButton cuadro){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel color;
     private javax.swing.JLabel idnivel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

@@ -16,6 +16,10 @@ public class Matriz {
    private int x, y;
    private String id;
    private JButton[][] matriz;
+
+    public void setMatriz(JButton[][] matriz) {
+        this.matriz = matriz;
+    }
     
     
 
@@ -46,5 +50,10 @@ public class Matriz {
         this.y=y;
         this.id = id;
     }
-    
+    public Matriz(int x, int y, String id,JButton[][] matriz){
+        this.matriz=matriz;
+        this.x=x;
+        this.y=y;
+        this.id = id;
+    }
 }
