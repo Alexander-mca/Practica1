@@ -8,7 +8,7 @@ package compi1vacasjunio2020.practica1;
 import compi1vacasjunio2020.practica1.Token.Tipo;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+
 
 /**
  *

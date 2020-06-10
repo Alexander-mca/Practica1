@@ -13,20 +13,18 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Dimension;
+
 import java.awt.Point;
-import java.awt.Rectangle;
-import javax.swing.Icon;
+
 import javax.swing.JButton;
-import javax.swing.JPanel;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
-import sun.swing.plaf.windows.ClassicSortArrowIcon;
+
 
 /**
  *
@@ -694,9 +692,10 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             JOptionPane.showMessageDialog(null, "Nivel " + (nivel + 1) + " superado.");
             nivel++;
             piezajuego=0;
+           
+            Niveles();
             Item pieza1=EscogerPieza(piezajuego);
             CargarPieza(pieza1);
-            Niveles();
             puntuacion += punt;
             String nombre=niveles.get(nivel).getId();
             //se calcula la meta para el siguiente nivel
@@ -704,7 +703,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             meta.setText(String.valueOf(mt));
             labelnivel.setText(String.valueOf(nivel+1));
             idnivel.setText(nombre);         
-            
+            ActualizarNivel();
             punteo.setText("0");
         }
         if (niveles.size() == nivel) {
@@ -847,11 +846,11 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         // abre el manual de usuario
         try {
 
-		File pdfFile = new File("C:\\Users\\alexa\\Documents\\Cursos Universidad\\Compiladores 1\\VacacionesJunio2020\\Practica1\\[Compi1VacasJunio2020]Practica1\\src\\compi1vacasjunio2020\\practica1\\Manual de Usuario Practica1.pdf");
+		File pdfFile = new File("Manual de Usuario Practica1.pdf");
 		if (pdfFile.exists()) {
 
 			if (Desktop.isDesktopSupported()) {
-				Desktop.getDesktop().open(pdfFile);
+				Desktop.getDesktop().open(pdfFile);                                
 			} else {
 				System.out.println("Awt Desktop is not supported!");
 			}

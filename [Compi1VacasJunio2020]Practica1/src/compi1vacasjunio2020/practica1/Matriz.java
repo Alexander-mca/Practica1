@@ -6,7 +6,7 @@
 package compi1vacasjunio2020.practica1;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
+
 
 /**
  *
