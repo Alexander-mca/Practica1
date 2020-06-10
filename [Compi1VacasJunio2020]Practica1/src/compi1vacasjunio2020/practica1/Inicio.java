@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -600,7 +601,39 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
             
         } else if (pzselect.getPieza().equals("j") && pzselect.getOrientacion().equals(Tipo.menor)) {
             BajarPiezaLJ();
-        } else {
+        } else if((pzselect.getPieza().equals("j")||pzselect.getPieza().equals("l"))&&pzselect.getOrientacion().equals(Tipo.abajo)){
+            Point val=getSizeandFirst(tablero,3);
+            Point val2=getSizeandFirst(tablero, 2);
+            int data2=(int)val2.getX();
+            int data=(int)val.getX();
+            for (int i = 3; i>= 0; i--) {
+                //se baja la pieza
+                BajarPieza(i);
+               
+            }
+            //esto sirve para subir el cuadro que se haya bajado de más
+           boolean valor= SePuedeSubir(data,tablero);            
+           if(valor){
+               SubirCuadro(data,tablero);
+           }
+           boolean valor2=SePuedeSubir(data2,tablero);
+           if(valor2){               
+               SubirCuadro(data2,tablero);
+           }
+        }else if(pzselect.getPieza().equals("t")&&(pzselect.getOrientacion().equals(Tipo.menor)||pzselect.getOrientacion().equals(Tipo.mayor))){
+            Point val=getSizeandFirst(tablero,3);            
+            int data=(int)val.getX();
+            for (int i = 3; i>= 0; i--) {
+                //se baja la pieza
+                BajarPieza(i);
+               
+            }
+            //esto sirve para subir el cuadro que se haya bajado de más
+           boolean valor= SePuedeSubir(data,tablero);            
+           if(valor){
+               SubirCuadro(data,tablero);
+           }
+        }else{
             for (int i = 3; i>= 0; i--) {
                 //se baja la pieza
                 BajarPieza(i);
@@ -677,10 +710,18 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
         if (niveles.size() == nivel) {
             int resp = JOptionPane.showConfirmDialog(null, "Has terminado el juego.\nObtuviste un total de " + puntuacion + " puntos.\n¿Quieres Volver a Jugar?", "Felicidades", JOptionPane.YES_NO_OPTION);
             //se reinicia el juego
-            if (resp == 1) {
+            if (resp == 0) {
                 nivel = 0;
                 punteo.setText("0");
+                this.puntuacion = 0;
+                this.piezajuego = 0;
+                niveles.clear();
+                GeneracionMatrices();
+                Item pieza = EscogerPieza(piezajuego);
+                CargarPieza(pieza);
                 Niveles();
+                this.idnivel.setText(niveles.get(nivel).getId());
+                this.labelnivel.setText(String.valueOf(nivel + 1));
                 meta.setText("100");
             }
             return;
@@ -717,7 +758,7 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // salir
         int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere cerrar el juego?", "Alerta", JOptionPane.YES_NO_OPTION);
-        if(resp==1){
+        if(resp==0){
             this.dispose();
         }   
     }//GEN-LAST:event_jMenu5MouseClicked
@@ -804,7 +845,26 @@ int nivel=0,piezajuego=0,puntuacion=0,rotacion=0;
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // abre el manual de usuario
-        
+        try {
+
+		File pdfFile = new File("C:\\Users\\alexa\\Documents\\Cursos Universidad\\Compiladores 1\\VacacionesJunio2020\\Practica1\\[Compi1VacasJunio2020]Practica1\\src\\compi1vacasjunio2020\\practica1\\Manual de Usuario Practica1.pdf");
+		if (pdfFile.exists()) {
+
+			if (Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().open(pdfFile);
+			} else {
+				System.out.println("Awt Desktop is not supported!");
+			}
+
+		} else {
+			System.out.println("File is not exists!");
+		}
+
+		System.out.println("Done");
+
+	  } catch (Exception ex) {
+		ex.printStackTrace();
+	  }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1258,6 +1318,7 @@ private void CargarPieza(Item piezasel){
     }
 private void BajarPiezaLJ(){
         Matriz tablero = niveles.get(nivel);
+        Pieza pieza=Piezas.get(this.piezajuego);
         int val = 1;
         int sigval = val + 1;
         boolean bajar;
@@ -1284,8 +1345,14 @@ private void BajarPiezaLJ(){
                 actual.setBackground(sig.getBackground());
                 sig.setBackground(aux);
                 //revisa el sig de sig
-                if(sigval<tablero.getX()-2){
-                val1=tablero.getMatriz()[sigval+2][j];
+                if (pieza.getPieza().equals("l")) {
+                    if (sigval < tablero.getX() - 2) {
+                        val1 = tablero.getMatriz()[sigval + 2][j];
+                    }
+                } else {
+                    if (sigval < tablero.getX() - 2) {
+                        val1 = tablero.getMatriz()[sigval + 2][j + 2];
+                    }
                 }
 
             }
@@ -1298,6 +1365,7 @@ private void BajarPiezaLJ(){
                 if (CuadroVacio(cuadro1)) {
                     continue;
                 }
+                int r1=j;
                 //para bajar laa que solo tienen 1 cuadro
                 Color colorc1 = cuadro1.getBackground();
                 if (CuadroVacio(cuadro2)) {
@@ -1331,15 +1399,25 @@ private void BajarPiezaLJ(){
                     sigc2.setBackground(aux2);
                     sigc3.setBackground(aux3);
                 }
-                JButton val2=tablero.getMatriz()[sigval+1][r2];
-                JButton val3=tablero.getMatriz()[sigval+1][r3];
-                if(!CuadroVacio(val2)|| !CuadroVacio(val3)){
-                    return;
+                if (pieza.getPieza().equals("l")) {
+                    JButton val2 = tablero.getMatriz()[sigval + 1][r2];
+                    JButton val3 = tablero.getMatriz()[sigval + 1][r3];
+                    if (!CuadroVacio(val2) || !CuadroVacio(val3)) {
+                        return;
+                    }
+                    if (!CuadroVacio(val1)) {
+                        return;
+                    }
+                } else {
+                    JButton val2 = tablero.getMatriz()[sigval + 1][r1];
+                    JButton val3 = tablero.getMatriz()[sigval + 1][r2];
+                    if (!CuadroVacio(val2) || !CuadroVacio(val3)) {
+                        return;
+                    }
+                    if (!CuadroVacio(val1)) {
+                        return;
+                    }
                 }
-                if(!CuadroVacio(val1)){
-                    return;
-                }
-
             }
             val++;
             sigval++;
@@ -1381,6 +1459,53 @@ private Item EscogerPiezaCatalogo(String letra,int orientacion){
     }
     return pieza;
 }
+private boolean SePuedeSubir(int j, Matriz tablero){
+    int val1=0;
+    boolean vacio=false;
+    for (int k = tablero.getX()-1; k >=4; k--) {
+        JButton c1=tablero.getMatriz()[k][j];
+        if(CuadroVacio(c1)){
+            val1=k;            
+            break;
+        }
+    }
+    
+    for (int i = val1; i>=4; i--) {        
+        JButton antc1=tablero.getMatriz()[i][j];
+        if(!CuadroVacio(antc1)){
+            vacio=true;
+            break;
+        }                   
+        
+    }
+    
+   return vacio;
+}
+private void SubirCuadro(int j,Matriz tablero){
+    int val1=0;
+    
+    for (int k = tablero.getX()-1; k >=4; k--) {
+        JButton c1=tablero.getMatriz()[k][j];
+        if(CuadroVacio(c1)){
+            val1=k;
+            
+            break;
+        }
+    }
+    if(val1<tablero.getX()-1){
+    for (int i = val1+1; i>=4; i--) {
+        JButton cuadro1=tablero.getMatriz()[i][j];
+        JButton antc1=tablero.getMatriz()[i-1][j];
+        if(!CuadroVacio(antc1)){           
+            break;
+        }
+        Color aux=cuadro1.getBackground();
+        cuadro1.setBackground(antc1.getBackground());
+        antc1.setBackground(aux);             
+        
+    }
+    }
+}
 
 private void BajarPieza(int index){
         
@@ -1392,7 +1517,7 @@ private void BajarPieza(int index){
         int lim=(int)first.getY()+k;
         for (int i = index; i < tablero.getX(); i++) {
             if (i == limite1) {
-                return;
+                break;
             }
 //         if(!SePuedeBajar(i,0,tablero)){
 //             continue;
@@ -1409,13 +1534,14 @@ private void BajarPieza(int index){
                 }
                 
                 
-                //para bajar laa que solo tienen 1 cuadro
+                //para bajar las que solo tienen 1 cuadro
                 Color aux = actual.getBackground();
                 if(j==lim-1){
                     if (CuadroVacio(sig)) {                        
                         actual.setBackground(sig.getBackground());
                         sig.setBackground(aux);
                     }else{
+                        
                         return;
                     }
                     continue;
